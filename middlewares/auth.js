@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { AuthFailedError } = require('./errors/AuthFailedError');
-
-const { NODE_ENV, JWT_SECRET } = process.env;
+const { JWT_SECRET } = require('../constants/constants');
 
 module.exports.auth = (req, res, next) => {
   const token = req.cookies.jwt;
@@ -13,7 +12,7 @@ module.exports.auth = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
+    payload = jwt.verify(token, JWT_SECRET);
   } catch (err) {
     next(new AuthFailedError('Auth failed'));
   }

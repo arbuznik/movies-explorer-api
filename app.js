@@ -11,8 +11,8 @@ const { createUser, login, logout } = require('./controllers/users');
 const { auth } = require('./middlewares/auth');
 const { handleErrors } = require('./middlewares/errors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { PORT, MONGO_DATA_BASE } = require('./constants/constants');
 
-const { PORT = 3000 } = process.env;
 const app = express();
 
 app.use(bodyParser.json());
@@ -24,7 +24,7 @@ app.use(requestLogger);
 
 app.use(cors({
   origin: [
-    'http://localhost:3001',
+    'http://localhost:3000',
     'https://arbuznik.diploma.nomoredomains.xyz',
     'http://arbuznik.diploma.nomoredomains.xyz',
   ],
@@ -64,7 +64,7 @@ app.use(handleErrors);
 
 app.listen(PORT);
 
-mongoose.connect('mongodb://localhost:27017/moviesdb', {
+mongoose.connect(MONGO_DATA_BASE, {
   useNewUrlParser: true,
   autoIndex: true,
 });

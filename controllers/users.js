@@ -5,7 +5,7 @@ const { NotFoundError } = require('../middlewares/errors/NotFoundError');
 const { ConflictError } = require('../middlewares/errors/ConflictError');
 const { ValidationError } = require('../middlewares/errors/ValidationError');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
+const { JWT_SECRET } = process.env;
 
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
@@ -79,7 +79,7 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        JWT_SECRET,
         { expiresIn: '7d' },
       );
       res.cookie('jwt', token, {
