@@ -4,8 +4,7 @@ const User = require('../models/user');
 const { NotFoundError } = require('../middlewares/errors/NotFoundError');
 const { ConflictError } = require('../middlewares/errors/ConflictError');
 const { ValidationError } = require('../middlewares/errors/ValidationError');
-
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET } = require('../constants/constants');
 
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
