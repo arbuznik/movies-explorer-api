@@ -1,8 +1,8 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const { celebrate, Joi, errors } = require('celebrate')
-const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser')
+const express = require('express');
+const mongoose = require('mongoose');
+const { celebrate, Joi, errors } = require('celebrate');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const users = require('./routes/users');
@@ -12,15 +12,15 @@ const { auth } = require('./middlewares/auth');
 const { handleErrors } = require('./middlewares/errors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3001 } = process.env
-const app = express()
+const { PORT = 3001 } = process.env;
+const app = express();
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cookieParser())
+app.use(cookieParser());
 
-app.use(requestLogger)
+app.use(requestLogger);
 
 app.use(cors({
   origin: [
@@ -31,7 +31,7 @@ app.use(cors({
   methods: ['OPTIONS', 'GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   allowedHeaders: ['Content-Type', 'origin', 'Authorization', 'Cookie'],
   credentials: true,
-}))
+}));
 
 app.post('/signup', celebrate({
   body: Joi.object().keys({
@@ -39,32 +39,32 @@ app.post('/signup', celebrate({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
   }),
-}), createUser)
+}), createUser);
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
-}), login)
+}), login);
 
-app.get('/signout', logout)
+app.get('/signout', logout);
 
-app.use(auth)
+app.use(auth);
 
-app.use('/users', users)
-app.use('/movies', movies)
+app.use('/users', users);
+app.use('/movies', movies);
 
-app.use((req, res) => res.status(404).send({ message: 'Страница не найдена' }))
+app.use((req, res) => res.status(404).send({ message: 'Страница не найдена' }));
 
-app.use(errorLogger)
+app.use(errorLogger);
 
-app.use(errors())
-app.use(handleErrors)
+app.use(errors());
+app.use(handleErrors);
 
-app.listen(PORT)
+app.listen(PORT);
 
 mongoose.connect('mongodb://localhost:27017/moviesdb', {
   useNewUrlParser: true,
   autoIndex: true,
-})
+});

@@ -1,55 +1,55 @@
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const User = require('../models/user')
-const { NotFoundError } = require('../middlewares/errors/NotFoundError')
-const { ConflictError } = require('../middlewares/errors/ConflictError')
-const { ValidationError } = require('../middlewares/errors/ValidationError')
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const User = require('../models/user');
+const { NotFoundError } = require('../middlewares/errors/NotFoundError');
+const { ConflictError } = require('../middlewares/errors/ConflictError');
+const { ValidationError } = require('../middlewares/errors/ValidationError');
 
-const { NODE_ENV, JWT_SECRET } = process.env
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {
-        throw new NotFoundError('Пользователь не найден')
+        throw new NotFoundError('Пользователь не найден');
       }
 
       const {
         _id, name, email,
-      } = user
+      } = user;
 
       res.send({
         _id, name, email,
-      })
+      });
     })
-    .catch(next)
-}
+    .catch(next);
+};
 
 module.exports.createUser = (req, res, next) => {
   const {
     name, email, password,
-  } = req.body
+  } = req.body;
 
   return bcrypt.hash(password, 10)
     .then((hash) => User.create({
       name, email, password: hash,
     }))
     .then(() => res.status(200).send({
-        name, email,
+      name, email,
     }))
     .catch((error) => {
       if (error.code === 11000) {
-        next(new ConflictError('Email already exists'))
+        next(new ConflictError('Email already exists'));
       } else if (error.name === 'ValidationError') {
-        next(new ValidationError('Validation Error'))
+        next(new ValidationError('Validation Error'));
       } else {
-        next(error)
+        next(error);
       }
-    })
-}
+    });
+};
 
 module.exports.updateUser = (req, res, next) => {
-  const { name, email } = req.body
+  const { name, email } = req.body;
 
   User.findByIdAndUpdate(
     req.user._id,
@@ -61,19 +61,19 @@ module.exports.updateUser = (req, res, next) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-      })
+      });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new ValidationError('Validation Error'))
+        next(new ValidationError('Validation Error'));
       } else {
-        next(err)
+        next(err);
       }
-    })
-}
+    });
+};
 
 module.exports.login = (req, res, next) => {
-  const { email, password } = req.body
+  const { email, password } = req.body;
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
@@ -81,13 +81,13 @@ module.exports.login = (req, res, next) => {
         { _id: user._id },
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
-      )
+      );
       res.cookie('jwt', token, {
         maxAge: 3600000,
         httpOnly: true,
-      }).send({ message: 'Auth successfull' })
+      }).send({ message: 'Auth successfull' });
     })
-    .catch(next)
-}
+    .catch(next);
+};
 
-module.exports.logout = (req, res) => res.status(200).clearCookie('jwt').send({ message: 'Logout successfull' })
+module.exports.logout = (req, res) => res.status(200).clearCookie('jwt').send({ message: 'Logout successfull' });

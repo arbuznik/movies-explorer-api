@@ -1,10 +1,10 @@
-const movies = require('express').Router()
-const { celebrate, Joi } = require('celebrate')
+const movies = require('express').Router();
+const { celebrate, Joi } = require('celebrate');
 const {
   getMovies, createMovie, deleteMovie,
-} = require('../controllers/movies')
+} = require('../controllers/movies');
 
-movies.get('/', getMovies)
+movies.get('/', getMovies);
 
 const urlRegex = /^(https?:\/\/)(www\.)?[-a-zA-Z0-9@:%._+~#=]+\.[a-zA-Z0-9]+\b([-a-zA-Z0-9-._~:/?#[\]@!$&'()*+,;=]*)/;
 
@@ -22,12 +22,12 @@ movies.post('/', celebrate({
     trailerLink: Joi.string().required().pattern(urlRegex),
     thumbnail: Joi.string().required().pattern(urlRegex),
   }),
-}), createMovie)
+}), createMovie);
 
 movies.delete('/:movieId', celebrate({
   params: Joi.object().keys({
     movieId: Joi.string().length(24).hex().required(),
   }),
-}), deleteMovie)
+}), deleteMovie);
 
-module.exports = movies
+module.exports = movies;
