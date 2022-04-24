@@ -63,7 +63,9 @@ module.exports.updateUser = (req, res, next) => {
       });
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.code === 11000) {
+        next(new ConflictError('Email already exists'));
+      } else if (err.name === 'ValidationError') {
         next(new ValidationError('Validation Error'));
       } else {
         next(err);
