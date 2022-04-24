@@ -1,8 +1,8 @@
 {
   "name": "movies-explorer-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Movies explorer project",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js"
@@ -24,6 +24,17 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
-    "express": "^4.17.3"
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
+    "celebrate": "^15.0.1",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.17.3",
+    "mongoose": "^6.3.0",
+    "validator": "^13.7.0",
+    "jsonwebtoken": "^8.5.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express-winston": "^4.2.0",
+    "winston": "^3.6.0"
   }
 }
