@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
@@ -11,7 +12,6 @@ const register = require('./routes/register');
 const { auth } = require('./middlewares/auth');
 const { handleErrors } = require('./middlewares/errors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { PORT, MONGO_DATA_BASE } = require('./constants/constants');
 const { NotFoundError } = require('./middlewares/errors/NotFoundError');
 
 const app = express();
@@ -50,9 +50,9 @@ app.use(errorLogger);
 app.use(errors());
 app.use(handleErrors);
 
-app.listen(PORT);
+app.listen(process.env.PORT);
 
-mongoose.connect(MONGO_DATA_BASE, {
+mongoose.connect(process.env.MONGO_DATA_BASE, {
   useNewUrlParser: true,
   autoIndex: true,
 });

@@ -1,6 +1,6 @@
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { AuthFailedError } = require('./errors/AuthFailedError');
-const { JWT_SECRET } = require('../constants/constants');
 
 module.exports.auth = (req, res, next) => {
   const token = req.cookies.jwt;
@@ -12,7 +12,7 @@ module.exports.auth = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, JWT_SECRET);
+    payload = jwt.verify(token, process.env.JWT_SECRET);
   } catch (err) {
     next(new AuthFailedError('Auth failed'));
   }
