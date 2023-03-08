@@ -26,8 +26,7 @@ app.use(requestLogger);
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://arbuznik.diploma.nomoredomains.xyz',
-    'http://arbuznik.diploma.nomoredomains.xyz',
+    'https://movies-explorer-2p8x.onrender.com',
   ],
   methods: ['OPTIONS', 'GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   allowedHeaders: ['Content-Type', 'origin', 'Authorization', 'Cookie'],
