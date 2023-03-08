@@ -26,7 +26,7 @@ app.use(requestLogger);
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://movies-explorer-2p8x.onrender.com',
+    'https://arbuznik-movie-explorer.netlify.app',
   ],
   methods: ['OPTIONS', 'GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   allowedHeaders: ['Content-Type', 'origin', 'Authorization', 'Cookie'],
