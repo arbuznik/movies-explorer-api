@@ -93,4 +93,8 @@ module.exports.login = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.logout = (req, res) => res.status(200).clearCookie('jwt').send({ message: 'Logout successfull' });
+module.exports.logout = (req, res) => res.status(200).clearCookie('jwt', {
+  secure: true,
+  sameSite: 'none',
+  httpOnly: true,
+}).send({ message: 'Logout successfull' });
