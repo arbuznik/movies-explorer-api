@@ -1,10 +1,14 @@
-# Movies explorer API
+# Movie-explorer API
 
-## Запуск проекта
+This is a backend bit of a movie explorer MERN app.
 
-`npm run start` — запускает сервер   
-`npm run dev` — запускает сервер с hot-reload
+You can find frontend bit here:
+https://github.com/arbuznik/movies-explorer-frontend
 
-## Public domain
-51.250.27.93
-https://api.arbuznik.diploma.nomoredomains.xyz/
+## Read about the project
+
+And learn more about its architecture in my blog:
+https://arbuznik.com/projects/movie-explorer/
+
+## Live demo
+https://arbuznik-movie-explorer.netlify.app/
